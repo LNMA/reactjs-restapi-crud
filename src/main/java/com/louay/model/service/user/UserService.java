@@ -13,5 +13,5 @@ public interface UserService {
 
     User findUserByUserId(User user);
 
-    List<User> findAllUser(User user);
+    List<User> findAllUser();
 }

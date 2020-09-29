@@ -2,10 +2,8 @@ package com.louay.model.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -23,13 +21,11 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 
-@EnableAutoConfiguration
 @Configuration
 @EnableTransactionManagement
 @EnableJpaAuditing
 @EnableJpaRepositories(basePackages = "com.louay.model.dao")
 @EntityScan(basePackages = "com.louay.model.entity")
-@ComponentScan(basePackages = "com.louay.model")
 public class PersistenceJPAConfig {
     @Bean("pool")
     @Order(1)

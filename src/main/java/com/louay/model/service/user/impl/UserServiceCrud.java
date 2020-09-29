@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class UserServiceCrud implements UserService, Serializable {
-    private static final long serialVersionUID = 7196237813730380285L;
+    private static final long serialVersionUID = -6180405344607036941L;
     private final UserDao userDao;
 
     @Autowired
@@ -49,7 +49,7 @@ public class UserServiceCrud implements UserService, Serializable {
 
     @Transactional
     @Override
-    public List<User> findAllUser(User user) {
+    public List<User> findAllUser() {
         return this.userDao.find100User();
     }
 }
