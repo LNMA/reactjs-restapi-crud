@@ -31,11 +31,11 @@ public class UserController implements Serializable {
         this.serviceFactory = serviceFactory;
     }
 
-    @RequestMapping(value = "/user/update-user", method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-    ResponseEntity<String> EditUser(@RequestBody User user) {
+    @RequestMapping(value = "/user/update-user", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+    ResponseEntity<String> EditUser(@ModelAttribute User user) {
         Assert.notNull(user, "user cannot be null!.");
-
+        System.out.println(user.getUserId());
         updateUser(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(String.format("User ID %d updated successfully.", user.getUserId()));
@@ -98,8 +98,8 @@ public class UserController implements Serializable {
     }
 
     @PostMapping(value = "/user/create-user", produces = MediaType.TEXT_PLAIN_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<String> saveUser(@RequestBody User user) {
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<String> saveUser(@ModelAttribute User user) {
         Assert.notNull(user, "user cannot be null!.");
 
         User userPersist = createUser(user);

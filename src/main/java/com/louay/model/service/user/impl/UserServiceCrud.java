@@ -32,7 +32,7 @@ public class UserServiceCrud implements UserService, Serializable {
     @Transactional
     @Override
     public User deleteUserByUserId(User user) {
-        return this.userDao.update(user);
+        return this.userDao.delete(user);
     }
 
     @Transactional

@@ -1,12 +1,16 @@
 package com.louay.model.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyGroup;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -14,9 +18,9 @@ import java.util.Objects;
 @Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable, Comparable<User> {
-    private static final long serialVersionUID = -4737831879147548209L;
+    private static final long serialVersionUID = 1100592655025621112L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, columnDefinition = "BIGINT(20)")
     private Long userId;
     @Column(name = "forename", nullable = false, columnDefinition = "VARCHAR(50)")
@@ -32,6 +36,8 @@ public class User implements Serializable, Comparable<User> {
     @LastModifiedDate
     @Column(name = "last_edit_date", nullable = false, columnDefinition = "TIMESTAMP(0)")
     private Calendar lastEditDate;
+    @Transient
+    private MultipartFile userIdMultiPart;
 
     public Long getUserId() {
         return userId;
@@ -71,6 +77,26 @@ public class User implements Serializable, Comparable<User> {
 
     public void setLastEditDate(Calendar lastEditDate) {
         this.lastEditDate = lastEditDate;
+    }
+
+    public StringBuilder getImageBase64Encode() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(Base64.getEncoder().encodeToString(this.userImage));
+
+        return stringBuilder;
+    }
+
+    public MultipartFile getUserIdMultiPart() {
+        return userIdMultiPart;
+    }
+
+    public void setUserIdMultiPart(MultipartFile userIdMultiPart) {
+        this.userIdMultiPart = userIdMultiPart;
+        try {
+            this.userImage = userIdMultiPart.getBytes();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Transient
